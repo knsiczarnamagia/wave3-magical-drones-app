@@ -75,7 +75,13 @@ Now, move the `public.pem` and `private.pem` files to `/src/main/resources/certs
 *Note: the production AWS solution will handle the RSA key storage differently. I'll describe it here, once it's implemented.*
 
 ## Build and run
-While this project uses Maven as a build tool, it's not required to have it installed on your local machine as the Maven Wrapper is included in the project's source code. It means that, whenever you run the Maven wrapper (`./mvnw'), Maven will automatically pull Maven from source and use it to run the command. So, to build and run the application in `dev` profile from the terminal, use:
+While this project uses Maven as a build tool, it's not required to have it installed on your local
+machine as the Maven Wrapper is included in the project's source code.
+It means that, whenever you run the Maven wrapper (`./mvnw`), Maven will automatically pull Maven
+from source and use it to run the command.
+
+So, to build and run the application in `dev` profile from the terminal, first navigate to the
+`/backend` directory and then run the following command:
 
 ```shell
 ./mvnw spring-boot:run -"Dspring-boot.run.profiles"=dev
