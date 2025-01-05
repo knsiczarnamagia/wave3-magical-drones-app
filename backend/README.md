@@ -6,7 +6,10 @@ A backend service for the Magical Drones project.
 
 ## Profiles
 
-The project contains two run profiles: production (`prod`) and development (`dev`). The current profile is specified in the `src/main/java/application.yaml` config file. You may temporarily change the setting there, although I recommend to set it in the app execution command as an option: `mvn spring-boot:run -"Dspring-boot.run.profiles"=dev`
+The project contains two run profiles: production (`prod`) and development (`dev`).
+The current profile is specified in the `src/main/resources/application.yaml` config file.
+You may temporarily change the setting there, although I recommend to set it in the app
+execution command as an option: `mvn spring-boot:run -"Dspring-boot.run.profiles"=dev`.
 
 ### `prod` production profile
 
