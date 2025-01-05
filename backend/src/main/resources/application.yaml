@@ -12,7 +12,7 @@ spring:
       max-request-size: 10MB
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/magicaldrones_dev
+    url: ${MD_DB_URL}
     username: ${MD_DB_USERNAME}
     password: ${MD_DB_PWD}
     driver-class-name: org.postgresql.Driver
@@ -26,8 +26,8 @@ spring:
 aws:
   region: us-east-1
   s3:
-    bucket: magical-drones
-    bucket-test: magical-drones-integration-tests
+    bucket: ${MD_S3_BUCKET}
+    bucket-test: ${MD_S3_BUCKET_TEST}
 
 rsa:
   private-key: classpath:certs/private.pem

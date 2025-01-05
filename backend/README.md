@@ -53,6 +53,11 @@ CREATE DATABASE magicaldrones_dev;
 The project depends on the following environment variables, which need to be specified on a local machine before running:
 - `MD_DB_USERNAME` - the username of the database user
 - `MD_DB_PWD` - the password to the database user
+- `MD_DB_URL` - the connection url to the Postgres database; should be set to `jdbc:postgresql://localhost:[port]/[database-name]` (the default postgres port is 5432)
+- `MD_S3_BUCKET` - the name of the AWS S3 bucket
+- `MD_S3_BUCKET_TEST` - the name of the AWS S3 bucket for integration tests (required only for running tests)
+- `AWS_ACCESS_KEY_ID` (optionally) - AWS S3 credentials, alternative to the `~/.aws/credentials` file
+- `AWS_SECRET_ACCESS_KEY` (optionally) - AWS S3 credentials, alternative to the `~/.aws/credentials` file
 
 4. JWT signature keys
 
@@ -86,6 +91,8 @@ So, to build and run the application in `dev` profile from the terminal, first n
 ```shell
 ./mvnw spring-boot:run -"Dspring-boot.run.profiles"=dev
 ```
+---
+Alternatively, if you want to run from an IDE, the `main` method is located in the `src/main/java/dev/jlynx/magicaldrones/MagicalDronesApp` class.
 
 # Potential issues
 
