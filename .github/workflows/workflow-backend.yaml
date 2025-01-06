@@ -32,3 +32,11 @@ jobs:
     - name: Run Maven unit tests
       working-directory: ./backend
       run: mvn test -Dgroups="unit"
+
+    - name: Run Maven integration tests
+      working-directory: ./backend
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        MD_S3_BUCKET_TEST: ${{ secrets.MD_S3_BUCKET_TEST }}
+      run: mvn test -Dgroups="integration"
