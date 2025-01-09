@@ -1,6 +1,5 @@
 package dev.jlynx.magicaldrones.storage.s3;
 
-import dev.jlynx.magicaldrones.config.S3TestConfiguration;
 import dev.jlynx.magicaldrones.exception.NoSuchKeyStorageException;
 import dev.jlynx.magicaldrones.exception.StorageException;
 import org.junit.jupiter.api.*;
@@ -9,9 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
@@ -19,37 +16,53 @@ import java.util.Random;
 
 import static org.assertj.core.api.Assertions.*;
 
-@ActiveProfiles("prod")
 @Tag("slow")
 @Tag("integration")
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest(classes = {S3TestConfiguration.class})
 public class S3ServiceITest {
 
-    @Autowired
-    private S3Service underTest;
+    private static final String AWS_REGION = "us-east-1";
 
-    @Autowired
+    private S3Service underTest;
     private S3Client s3;
 
-    @Autowired
-    private AwsProperties props;
 
-    private String getTestBucket() {
-        return props.getS3().getBucketTest();
+    private String testBucket() {
+        String bucket = System.getenv("MD_S3_BUCKET_TEST");
+        if (bucket == null || bucket.isBlank()) {
+            throw new IllegalStateException("Environment variable 'MD_S3_BUCKET_TEST' is not set or empty.");
+        }
+        return bucket;
+    }
+
+    private String awsRegion() {
+        return AWS_REGION;
+    }
+
+    public S3Client s3Client() {
+        return S3Client.builder()
+                .region(Region.of(awsRegion()))
+                .build();
+    }
+
+
+    @BeforeEach
+    void setUp() {
+        this.s3 = s3Client();
+        underTest = new S3Service(s3);
     }
 
     @AfterEach
     void tearDown() {
         ListObjectsV2Request request = ListObjectsV2Request.builder()
-                .bucket(getTestBucket())
+                .bucket(testBucket())
                 .build();
         ListObjectsV2Response response;
         while (true) {
             response = s3.listObjectsV2(request);
             for (S3Object object : response.contents()) {
                 s3.deleteObject(DeleteObjectRequest.builder()
-                        .bucket(getTestBucket())
+                        .bucket(testBucket())
                         .key(object.key())
                         .build());
             }
@@ -77,10 +90,10 @@ public class S3ServiceITest {
         byte[] payload = getRandomBytes(3);
 
         // when
-        underTest.upload(getTestBucket(), key, payload);
+        underTest.upload(testBucket(), key, payload);
 
         // then
-        byte[] downloaded = underTest.download(getTestBucket(), key);
+        byte[] downloaded = underTest.download(testBucket(), key);
         assertThat(downloaded).isEqualTo(payload);
     }
 
@@ -89,10 +102,10 @@ public class S3ServiceITest {
         // given
         byte[] payload = getRandomBytes(0);
         String key = "example.jpg";
-        underTest.upload(getTestBucket(), key, payload);
+        underTest.upload(testBucket(), key, payload);
 
         // when
-        byte[] downloaded = underTest.download(getTestBucket(), key);
+        byte[] downloaded = underTest.download(testBucket(), key);
 
         // then
         assertThat(downloaded).isEqualTo(payload)
@@ -104,22 +117,22 @@ public class S3ServiceITest {
     void delete_ShouldDeleteExistingObjectsAndThrowWhenTryingToDownloadThem(String key) throws StorageException {
         // given
         byte[] payload = getRandomBytes(3);
-        underTest.upload(getTestBucket(), key, payload);
+        underTest.upload(testBucket(), key, payload);
 
         // when
-        underTest.delete(getTestBucket(), key);
+        underTest.delete(testBucket(), key);
 
         // then
-        assertThatThrownBy(() -> underTest.download(getTestBucket(), key))
+        assertThatThrownBy(() -> underTest.download(testBucket(), key))
                 .isInstanceOf(NoSuchKeyStorageException.class)
-                .hasMessage("Requested a nonexistent object with key '%s' from bucket '%s'", key, getTestBucket());
+                .hasMessage("Requested a nonexistent object with key '%s' from bucket '%s'", key, testBucket());
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"testfile.jpg", "test5-file6", "sub/test23-29file.jpg", "sub3/23/abcd-4563-efgh"})
     void delete_shouldDoNothing_WhenDeletingNonExistingObjects(String key) {
         // when
-        Throwable thrown = catchThrowable(() -> underTest.delete(getTestBucket(), key));
+        Throwable thrown = catchThrowable(() -> underTest.delete(testBucket(), key));
 
         // then
         assertThat(thrown).isNull();
