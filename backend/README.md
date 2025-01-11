@@ -38,7 +38,7 @@ Therefore, I recommend using the `dev` profile for quick local testing.
 ## Prerequisites
 
 1. To run the app, you first need to install:
-   - Java 21
+   - Java 21 (recommended OpenJDK 21.0.2 or higher 21.x.x)
    - PostgreSQL 17
 
 
@@ -54,7 +54,7 @@ The project depends on the following environment variables, which need to be spe
 - `MD_DB_USERNAME` - the username of the database user
 - `MD_DB_PWD` - the password to the database user
 - `MD_DB_URL` - the connection url to the Postgres database; should be set to `jdbc:postgresql://localhost:[port]/[database-name]` (the default postgres port is 5432)
-- `MD_S3_BUCKET` - the name of the AWS S3 bucket
+- `MD_S3_BUCKET` - the name of the AWS S3 bucket or a local temp bucket
 - `MD_S3_BUCKET_TEST` - the name of the AWS S3 bucket for integration tests (required only for running tests)
 - `AWS_ACCESS_KEY_ID` (optionally) - AWS S3 credentials, alternative to the `~/.aws/credentials` file
 - `AWS_SECRET_ACCESS_KEY` (optionally) - AWS S3 credentials, alternative to the `~/.aws/credentials` file
@@ -63,7 +63,7 @@ The project depends on the following environment variables, which need to be spe
 
 The public-private RSA key pair for signing JWT tokens are stored in .pem files inside the `/src/main/resources/certs` directory. The folder is defined in `.gitignore` so that it's not commited to the public repo.
 
-To create the public and private RSA keys, you may use openssl:
+To create the public and private RSA keys, you may use openssl (you might need to install it first):
 
 ```shell
 # create a private key
