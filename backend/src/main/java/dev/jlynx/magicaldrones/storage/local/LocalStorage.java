@@ -25,8 +25,10 @@ public class LocalStorage implements StorageService {
 
     private static final Logger log = LoggerFactory.getLogger(LocalStorage.class);
 
+    private static final String ROOT_DIRECTORY = "local-storage";
+    
     /**
-     * Saves a file in the form of a byte array to the location specified as {@code bucketName/key}.
+     * Saves a file in the form of a byte array to the location specified as {@code ./local-storage/[bucketName]/[key]}.
      *
      * @param bucketName an absolute root path location on the local machine where the files will be stored
      * @param key the subdirectory and filename inside the root path where the object will be stored
@@ -35,22 +37,21 @@ public class LocalStorage implements StorageService {
      */
     @Override
     public void upload(String bucketName, String key, byte[] payload) throws StorageException {
-        Path path = Paths.get(bucketName, key);
+        Path path = Paths.get(ROOT_DIRECTORY, bucketName, key);
         if (!path.getParent().toFile().exists()) {
             path.getParent().toFile().mkdirs();
         }
         try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path.toFile()))) {
             bos.write(payload);
-            log.trace("Saved object to local bucket at '{}' with key '{}'", bucketName, key);
+            log.trace("Saved object to local storage at '{}'", path);
         } catch (IOException ex) {
-            log.debug("Failed to save object to local bucket at '{}' with key '{}'", bucketName, key);
-            throw new StorageException("Failed to save object to local bucket at '%s' with key '%s'"
-                    .formatted(bucketName, key), ex);
+            log.debug("Failed to save object to local storage at '{}'", path);
+            throw new StorageException("Failed to save object to local storage at '%s'".formatted(path), ex);
         }
     }
 
     /**
-     * Reads a file at the location specified as {@code bucketName/key} as a byte array.
+     * Reads a file at the location specified as {@code ./local-storage/[bucketName]/[key]} as a byte array.
      *
      * @param bucketName an absolute root path location on the local machine
      * @param key the subdirectory and filename inside the root path of the file to read
@@ -59,25 +60,24 @@ public class LocalStorage implements StorageService {
      */
     @Override
     public byte[] download(String bucketName, String key) throws StorageException, NoSuchKeyStorageException {
-        Path path = Paths.get(bucketName, key);
+        Path path = Paths.get(ROOT_DIRECTORY, bucketName, key);
         if (!path.toFile().isFile()) {
             log.debug("Tried to access path '{}' which is not a file or doesn't exist", path);
             throw new NoSuchKeyStorageException("Path '%s' is not a file or doesn't exist.".formatted(path.toString()));
         }
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(path.toFile()))) {
             byte[] contents = bis.readAllBytes();
-            log.trace("Read object from local bucket at '{}' with key '{}'", bucketName, key);
+            log.trace("Read object from local storage at '{}'", path);
             return contents;
         } catch (IOException ex) {
-            log.debug("Failed to read object from local bucket at '{}' with key '{}'", bucketName, key);
-            throw new StorageException("Failed to read object from local bucket at '%s' with key '%s'"
-                    .formatted(bucketName, key), ex);
+            log.debug("Failed to read object from local storage at '{}'", path);
+            throw new StorageException("Failed to read object from local storage at '%s'".formatted(path), ex);
         }
     }
 
     /**
-     * Deletes a file at the location specified as {@code bucketName/key}. Does nothing if there's no file
-     * at that location.
+     * Deletes a file at the location specified as {@code ./local-storage/[bucketName]/[key]}. Does nothing if
+     * there's no file at that location.
      *
      * @param bucketName an absolute root path location on the local machine
      * @param key the subdirectory and filename inside the root path of the file to delete
@@ -85,19 +85,17 @@ public class LocalStorage implements StorageService {
      */
     @Override
     public void delete(String bucketName, String key) throws StorageException {
-        Path path = Paths.get(bucketName, key);
+        Path path = Paths.get(ROOT_DIRECTORY, bucketName, key);
         if (!Files.isRegularFile(path)) {
-            log.debug("Tried deleting object from local bucket at '{}' with key '{}'. Operation successful.",
-                    bucketName, key);
+            log.debug("Tried deleting object from local storage at '{}'. File doesn't exist.", path);
             return;
         }
         try {
             Files.delete(path);
-            log.trace("Deleted object from local bucket at '{}' with key '{}'", bucketName, key);
+            log.trace("Deleted object from local storage at '{}'", path);
         } catch (SecurityException | IOException ex) {
-            log.debug("Failed to delete object from local bucket at '{}' with key '{}'", bucketName, key);
-            throw new StorageException("Failed to delete object from local bucket at '%s' with key '%s'"
-                    .formatted(bucketName, key), ex);
+            log.debug("Failed to delete object from local storage at '{}'", path);
+            throw new StorageException("Failed to delete object from local storage at '%s'".formatted(path), ex);
         }
     }
 }

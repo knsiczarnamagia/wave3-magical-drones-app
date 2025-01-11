@@ -36,4 +36,4 @@ build/
 **/resources/certs/
 
 # Local storage bucket directory
-magical-drones/
+local-storage/
