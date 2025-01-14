@@ -37,3 +37,6 @@ build/
 
 # Local storage bucket directory
 local-storage/
+
+# Environment secrets
+.env

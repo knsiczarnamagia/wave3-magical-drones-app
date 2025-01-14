@@ -2,7 +2,30 @@
 
 A backend service for the Magical Drones project.
 
-# How to run locally?
+# How to run?
+
+The recommended way to run the application is to use Docker. The `compose.yaml` file
+contains all the configuration for Docker Compose. You'll need to add a `.env` file with
+environment variables. It should have the following form (the values are customisable):
+
+```dotenv
+POSTGRES_DB=magical-drones-db
+POSTGRES_USER=magicaldrones
+POSTGRES_PASSWORD=password
+
+# Application
+MD_DB_URL=jdbc:postgresql://db:5432/magical-drones-db
+MD_DB_USERNAME=magicaldrones
+MD_DB_PWD=password
+
+# AWS configuration
+AWS_ACCESS_KEY_ID=<your-aws-access-key-id>
+AWS_SECRET_ACCESS_KEY=<your-aws-secret>
+MD_S3_BUCKET=magical-drones-dev
+MD_S3_BUCKET_TEST=magical-drones-integration-tests
+```
+
+# How to run without Docker?
 
 ## Profiles
 
@@ -43,9 +66,9 @@ Therefore, I recommend using the `dev` profile for quick local testing.
 
 
 2. Set up the database
-- Create a new `magicaldrones_dev` on port 5432:
+- Create a new database with the name of choice on port 5432:
 ```sql
-CREATE DATABASE magicaldrones_dev;
+CREATE DATABASE magicaldrones_db;
 ```
 
 3. Environment variables
