@@ -48,7 +48,8 @@ jobs:
             --region ${{ vars.AWS_REGION }})
 
           NEW_TASK_DEFINITION=$(echo "$TASK_DEFINITION" | jq \
-            '.taskDefinition | .containerDefinitions[0].image="${{ vars.ECR_REPOSITORY_URI }}:$GITHUB_SHA" | \
+            --arg IMAGE "${{ vars.ECR_REPOSITORY_URI }}:$GITHUB_SHA" \
+            '.taskDefinition | .containerDefinitions[0].image=$IMAGE | \
             del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)')
 
           NEW_TASK_INFO=$(aws ecs register-task-definition --region ${{ vars.AWS_REGION }} \
