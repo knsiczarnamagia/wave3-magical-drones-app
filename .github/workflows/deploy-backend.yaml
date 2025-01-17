@@ -47,7 +47,7 @@ jobs:
             --task-definition ${{ vars.ECS_TASK_DEFINITION_NAME }} \
             --region ${{ vars.AWS_REGION }})
 
-          NEW_TASK_DEFINITION=$(echo "$TASK_DEFINITION" | jq \
+          NEW_TASK_DEFINITION=$(echo "$TASK_DEFINITION" | jq -r \
             --arg IMAGE "${{ vars.ECR_REPOSITORY_URI }}:${{ github.sha }}" \
             '.taskDefinition | .containerDefinitions[0].image=$IMAGE | \
             del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)')
