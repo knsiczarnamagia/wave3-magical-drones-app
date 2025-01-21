@@ -7,7 +7,6 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import dev.jlynx.magicaldrones.exception.InternalServerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -46,10 +45,6 @@ import java.util.List;
 @EnableMethodSecurity
 @EnableWebSecurity
 public class SecurityConfig {
-
-    @Autowired
-    private RsaKeyProperties rsaKeys;
-
 
     @Profile("dev")
     @Bean

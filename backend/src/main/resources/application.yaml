@@ -29,10 +29,6 @@ aws:
     bucket: ${MD_S3_BUCKET}
     bucket-test: ${MD_S3_BUCKET_TEST}
 
-rsa:
-  private-key: classpath:certs/private.pem
-  public-key: classpath:certs/public.pem
-
 
 management:
   endpoints:
