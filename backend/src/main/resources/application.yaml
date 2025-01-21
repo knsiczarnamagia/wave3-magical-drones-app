@@ -32,3 +32,21 @@ aws:
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+            - health
+            - info
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: Magical Drones backend service
+    description: A backend web service for the Magical Drones project
+    version: @project.version@

@@ -53,6 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/auth/token").permitAll()
                         .requestMatchers(HttpMethod.POST, "/account").permitAll()
+                        .requestMatchers("/actuator", "/actuator/**").permitAll()
                         .requestMatchers("/account/**", "/transform/**", "/image/**").hasRole("USER")
                         .requestMatchers("/dummy").authenticated()
                         .anyRequest().denyAll()
@@ -77,6 +78,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/auth/token").permitAll()
                         .requestMatchers(HttpMethod.POST, "/account").permitAll()
+                        .requestMatchers("/actuator", "/actuator/health", "/actuator/info").permitAll()
                         .requestMatchers("/account/**", "/transform/**", "/image/**").hasRole("USER")
                         .anyRequest().denyAll()
                 )
