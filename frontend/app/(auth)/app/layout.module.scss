@@ -1,0 +1,10 @@
+@use '@/app/globals' as g;
+
+@mixin main-margin {
+    margin-left: g.$space-sm;
+    margin-right: g.$space-sm;
+}
+
+.main {
+    @include main-margin();
+}

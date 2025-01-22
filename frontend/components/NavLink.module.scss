@@ -1,0 +1,33 @@
+@use '@/app/globals' as globals;
+
+.navLink {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 globals.$space-xs;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    color: globals.$color-primary;
+    border-radius: globals.$radius-xl;
+
+    &:hover {
+        background-color: globals.$bg-color-secondary-2-light;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .link {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        width: 100%;
+    
+        text-decoration: none;
+        color: inherit;
+    }
+} 

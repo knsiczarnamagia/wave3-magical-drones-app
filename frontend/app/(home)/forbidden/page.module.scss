@@ -1,0 +1,32 @@
+@use '@/app/globals' as g;
+
+@mixin main-margin {
+    margin-left: g.$space-sm;
+    margin-right: g.$space-sm;
+}
+
+.main {
+    @include main-margin();
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: g.$space-md;
+    text-align: center;
+}
+
+.text {
+    margin-bottom: g.$space-md;
+}
+
+.link {
+    color: g.$color-primary;
+    text-decoration: none;
+    font-size: g.$font-size-lg;
+    transition: g.$transition-lg;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

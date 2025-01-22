@@ -1,0 +1,50 @@
+@use '@/app/globals' as g;
+
+.form {
+    max-width: 400px;
+    width: 100%;
+    padding: 2rem;
+    background-color: white;
+    border: 1px solid g.$bg-color-secondary-1-light;
+    border-radius: g.$radius-xl;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: auto;
+    margin-top: g.$space-xxl;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+    text-align: center;
+    margin: 0;
+}
+
+.errorMessage {
+    font-size: g.$font-size-sub;
+    color: g.$color-error;
+    margin-block: 0;
+}
+
+.successMessage {
+    font-size: g.$font-size-sub;
+    color: g.$color-success;
+    margin-block: 0;
+}
+
+.loginInfo {
+    text-align: center;
+
+    a {
+        margin-left: g.$space-xs;
+        text-decoration: none;
+        color: g.$color-primary;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

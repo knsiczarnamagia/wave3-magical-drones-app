@@ -1,0 +1,50 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+body * {
+    box-sizing: border-box;
+}
+
+// $color-primary: rgb(179, 0, 255);
+$color-primary: rgb(255, 145, 0);
+$color-hover: #d87a00;
+$bg-color-primary-light: white;
+$bg-color-secondary-1-light: rgb(224, 224, 224);
+$bg-color-secondary-2-light: rgb(199, 199, 199);
+
+$color-success: #10B981;
+$color-error: #EF4444;
+
+$font-size-xs: 0.5rem;
+$font-size-sm: 0.75rem;
+$font-size-sub: 0.875rem;
+$font-size-md: 1.25rem;
+$font-size-lg: 1.5rem;
+$font-size-xl: 1.75rem;
+$font-size-xxl: 2rem;
+$font-size-xxxl: 2.5rem;
+
+$space-xs: 4px;
+$space-sm: 8px;
+$space-normal: 12px;
+$space-md: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+$space-xxl: 48px;
+
+$radius-xxs: 5px;
+$radius-xs: 10px;
+$radius-sm: 15px;
+$radius-md: 20px;
+$radius-lg: 25px;
+$radius-xl: 30px;
+$radius-xxl: 40px;
+$radius-full: 100%;
+
+$transition-md: all 0.5s ease;
+$transition-lg: all 0.7s ease;

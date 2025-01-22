@@ -1,0 +1,8 @@
+@use '@/app/globals' as g;
+
+.title {
+    color: g.$color-primary;
+    margin-bottom: g.$space-lg;
+    font-size: g.$font-size-xxl;
+    text-align: center;
+}
