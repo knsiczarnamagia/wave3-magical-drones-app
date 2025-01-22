@@ -3,11 +3,44 @@ name: Deployment to AWS ECS
 on:
   push:
     branches:
-      - pipeline
-#    paths:
-#      - 'backend/**'
+      - main
+    paths:
+      - 'backend/**'
 
 jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Run Maven unit tests
+        working-directory: ./backend
+        run: mvn test -Dgroups="unit"
+
+      - name: Run Maven integration tests
+        working-directory: ./backend
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          MD_S3_BUCKET_TEST: ${{ secrets.MD_S3_BUCKET_TEST }}
+        run: mvn test -Dgroups="integration"
+
   deploy:
     name: Build, Push and Deploy to ECS
     runs-on: ubuntu-latest
