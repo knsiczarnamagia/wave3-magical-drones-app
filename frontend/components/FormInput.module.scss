@@ -1,0 +1,39 @@
+@use '@/app/globals' as g;
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #E5E7EB;
+  border-radius: g.$radius-sm;
+  font-size: 1rem;
+  transition: border-color 0.15s ease-in-out;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+    border-color: #6366F1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+  }
+
+  &.error {
+    border-color: g.$color-error;
+  }
+}
+
+.errorMessage {
+  font-size: g.$font-size-sub;
+  color: g.$color-error;
+  margin-block: g.$space-xs;
+} 
