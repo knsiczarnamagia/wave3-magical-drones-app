@@ -8,7 +8,8 @@ export default async function TransformationPage({
     params: Promise<{ id: string }>
 }) {
     const id = (await params).id;
-    const transformation = await getTransformation(id);
+    let transformation = await getTransformation(id);
+    transformation = JSON.parse(JSON.stringify(transformation));
 
     return (
         <>

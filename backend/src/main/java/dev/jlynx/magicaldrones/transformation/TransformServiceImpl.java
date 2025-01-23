@@ -20,7 +20,6 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
 
-// todo: implement this
 @Service
 public class TransformServiceImpl implements TransformService {
 
@@ -49,7 +48,7 @@ public class TransformServiceImpl implements TransformService {
         Account account = accountRepository.findById(accountId).orElseThrow(() ->
                 new ResourceNotFoundException("Account with id=%d does not exist.".formatted(accountId)));
         var transformation = new Transformation(
-                LocalDateTime.now(Clock.systemUTC()),
+                null,
                 null,
                 request.sourceImage(),
                 null,
@@ -73,13 +72,16 @@ public class TransformServiceImpl implements TransformService {
                 );
         byte[] sourceImage = imageService.downloadTransformationImage(transformation.getSourceImageUuid());
         log.trace("Source image downloaded.");
+        LocalDateTime startedAt = LocalDateTime.now(Clock.systemUTC());
         byte[] transformed = model.transform(sourceImage);
+        LocalDateTime completedAt = LocalDateTime.now(Clock.systemUTC());
         log.trace("Source image transformed by ImageToImageService successfully.");
         String transformedUuid = imageService.saveTransformationImage(transformed);
         log.trace("Transformed image saved to file storage service with uuid={}", transformedUuid);
 
         transformation.setTransformedImageUuid(transformedUuid);
-        transformation.setCompletedAt(LocalDateTime.now(Clock.systemUTC()));
+        transformation.setStartedAt(startedAt);
+        transformation.setCompletedAt(completedAt);
         transformationRepository.save(transformation);
         log.trace("Updated Transformation: {} persisted to database", transformation);
         return transformedUuid;

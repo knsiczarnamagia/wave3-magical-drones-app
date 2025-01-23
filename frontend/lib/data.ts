@@ -1,14 +1,6 @@
 import { call, callWithErrors } from "./api-client";
+import { TransformationData } from "./types";
 
-interface TransformationData {
-    id: string;
-    title: string;
-    description: string;
-    sourceImageUuid: string;
-    transformedImageUuid: string;
-    startedAt: string;
-    completedAt: string;
-}
 
 export async function getTransformations(): Promise<TransformationData[]> {
     const resBody: TransformationData[] = await call('/transform', {

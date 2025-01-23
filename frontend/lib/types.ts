@@ -59,3 +59,13 @@ export type CreateTransFormState = {
 export interface UploadImageResponse {
     uuid: string;
 }
+
+export interface TransformationData {
+    id: string;
+    title: string;
+    description?: string;
+    sourceImageUuid: string;
+    transformedImageUuid?: string;
+    startedAt?: string;
+    completedAt?: string;
+}

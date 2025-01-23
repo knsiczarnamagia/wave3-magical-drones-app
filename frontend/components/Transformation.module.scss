@@ -73,7 +73,7 @@
     }
 }
 
-.downloadButton {
+.button {
     display: block;
     width: fit-content;
     margin: 1rem auto;
@@ -95,4 +95,8 @@
         opacity: 0.7;
         cursor: not-allowed;
     }
+}
+
+.imgPlaceholderText {
+    text-align: center;
 }

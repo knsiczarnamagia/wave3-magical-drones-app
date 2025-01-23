@@ -3,7 +3,7 @@
 import { notFound, redirect } from "next/navigation";
 import { getSession } from "./session";
 
-const URL: string = 'http://magical-drones-app-alb-913032659.us-east-1.elb.amazonaws.com/v1';
+const URL: string = 'http://localhost:8080/v1';
 
 export async function getApiUrl(): Promise<string> {
     return process.env.API_URL || URL;
@@ -34,7 +34,8 @@ export async function callWithErrors(path: string, options: RequestInit): Promis
     }
 
     const apiUrl = await getApiUrl();
-    // console.debug(`Calling ${apiUrl + path} with options: ${JSON.stringify(options)}`);
-    const response = await fetch(apiUrl + path, options);
+    const url = path.startsWith('http') ? path : apiUrl + path;
+    console.debug(`Calling ${url} with options: ${JSON.stringify(options)}`);
+    const response = await fetch(url, options);
     return response;
 }

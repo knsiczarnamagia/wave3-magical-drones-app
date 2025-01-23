@@ -58,8 +58,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/token").permitAll()
                         .requestMatchers(HttpMethod.POST, "/account").permitAll()
                         .requestMatchers("/actuator", "/actuator/**").permitAll()
-                        .requestMatchers("/account/**", "/transform/**", "/image/**").hasRole("USER")
-                        .requestMatchers("/dummy").authenticated()
+                        .requestMatchers("/account/**", "/transform/**", "/inference", "/image/**").hasRole("USER")
                         .anyRequest().denyAll()
                 )
                 .cors((cors) -> cors
@@ -83,7 +82,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/token").permitAll()
                         .requestMatchers(HttpMethod.POST, "/account").permitAll()
                         .requestMatchers("/actuator", "/actuator/health", "/actuator/info").permitAll()
-                        .requestMatchers("/account/**", "/transform/**", "/image/**").hasRole("USER")
+                        .requestMatchers("/account/**", "/transform/**", "/inference", "/image/**").hasRole("USER")
                         .anyRequest().denyAll()
                 )
                 .cors((cors) -> cors
@@ -99,10 +98,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        config.setAllowedOrigins(List.of("http://localhost:3000", "https://magicaldrones.jlynx.dev"));
         config.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;

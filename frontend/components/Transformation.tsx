@@ -5,16 +5,8 @@ import { parseDateTime } from '@/lib/utils';
 import styles from './Transformation.module.scss';
 import Image from 'next/image';
 import LoadingBox from './LoadingBox';
-
-interface TransformationData {
-    id: string;
-    title: string;
-    description: string;
-    sourceImageUuid: string;
-    transformedImageUuid: string;
-    startedAt: string;
-    completedAt: string;
-}
+import { TransformationData } from '@/lib/types';
+import { makeInference } from '@/lib/actions';
 
 interface TransformationProps {
     transformation: TransformationData;
@@ -22,12 +14,13 @@ interface TransformationProps {
 
 export default function Transformation({ transformation }: TransformationProps) {
     const [isLoading, setIsLoading] = useState(true);
+    const [isGenerating, setIsGenerating] = useState(false);
     const [isSourceDownloading, setIsSourceDownloading] = useState(false);
     const [isTransformedDownloading, setIsTransformedDownloading] = useState(false);
     const sourceImageSrc = `/api/imageProxy?uuid=${transformation.sourceImageUuid}`;
     const transformedImageSrc = `/api/imageProxy?uuid=${transformation.transformedImageUuid}`;
 
-    const handleDownload = async (imageSrc: string, setDownloading: (state: boolean) => void) => {
+    async function handleDownload(imageSrc: string, setDownloading: (state: boolean) => void) {
         try {
             setDownloading(true);
             const response = await fetch(imageSrc);
@@ -47,9 +40,24 @@ export default function Transformation({ transformation }: TransformationProps) 
         }
     };
 
+
+    // todo: handle errors better
+    async function sendInferenceRequest() {
+        setIsGenerating(true);
+        console.log('Generation started');
+        await makeInference(Number(transformation.id));
+        console.log('Generation complete')
+        setIsGenerating(false);
+        // todo: the page should not reload; add transformation object to state and useEffect to fetch it
+        window.location.reload();
+    }
+
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>{transformation.title}</h2>
+            <button className={styles.button} onClick={sendInferenceRequest} disabled={isGenerating}>
+                {isGenerating ? 'Generating...' : 'Generate'}
+            </button>
             <div className={styles.imagesContainer}>
                 <div className={styles.imageWrapper}>
                     <h3>Original Image</h3>
@@ -64,8 +72,8 @@ export default function Transformation({ transformation }: TransformationProps) 
                             onLoad={() => setIsLoading(false)}
                         />
                     </div>
-                    <button 
-                        className={styles.downloadButton}
+                    <button
+                        className={styles.button}
                         onClick={() => handleDownload(sourceImageSrc, setIsSourceDownloading)}
                         disabled={isSourceDownloading}
                     >
@@ -75,23 +83,31 @@ export default function Transformation({ transformation }: TransformationProps) 
                 <div className={styles.imageWrapper}>
                     <h3>Generated Image</h3>
                     <div className={styles.image}>
-                        {isLoading && <LoadingBox text="Loading image..." />}
-                        <Image
-                            src={transformedImageSrc}
-                            alt="Transformed image"
-                            fill
-                            style={{ objectFit: 'contain' }}
-                            sizes='(max-width: 768px) 100vw, 50vw'
-                            onLoad={() => setIsLoading(false)}
-                        />
+                        {transformation.transformedImageUuid ? (
+                            <>
+                                {isLoading && <LoadingBox text="Loading image..." />}
+                                <Image
+                                    src={transformedImageSrc}
+                                    alt="Transformed image"
+                                    fill
+                                    style={{ objectFit: 'contain' }}
+                                    sizes='(max-width: 768px) 100vw, 50vw'
+                                    onLoad={() => setIsLoading(false)}
+                                />
+                            </>
+                        ) : (
+                            <p className={styles.imgPlaceholderText}>Not generated yet.</p>
+                        )}
                     </div>
-                    <button 
-                        className={styles.downloadButton}
-                        onClick={() => handleDownload(transformedImageSrc, setIsTransformedDownloading)}
-                        disabled={isTransformedDownloading}
-                    >
-                        {isTransformedDownloading ? 'Downloading...' : 'Download generated'}
-                    </button>
+                    {transformation.transformedImageUuid && (
+                        <button
+                            className={styles.button}
+                            onClick={() => handleDownload(transformedImageSrc, setIsTransformedDownloading)}
+                            disabled={isTransformedDownloading}
+                        >
+                            {isTransformedDownloading ? 'Downloading...' : 'Download generated'}
+                        </button>
+                    )}
                 </div>
             </div>
             <div className={styles.description}>
@@ -99,8 +115,8 @@ export default function Transformation({ transformation }: TransformationProps) 
                 <p>{transformation.description}</p>
             </div>
             <div className={styles.metadata}>
-                <p>Generation started: {parseDateTime(transformation.startedAt).toLocaleString()}</p>
-                <p>Generation completed: {parseDateTime(transformation.completedAt).toLocaleString()}</p>
+                <p>Generation started: {transformation.startedAt ? parseDateTime(transformation.startedAt).toLocaleString() : '---'}</p>
+                <p>Generation completed: {transformation.completedAt ? parseDateTime(transformation.completedAt).toLocaleString() : '---'}</p>
             </div>
         </div>
     );

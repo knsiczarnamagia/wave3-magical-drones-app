@@ -190,3 +190,42 @@ async function fileUpload(file: File): Promise<string | undefined> {
         return undefined;
     }
 }
+
+export async function makeInference(transformationId: number): Promise<void> {
+    try {
+        const response = await callWithErrors('/inference', {
+            method: 'POST',
+            headers: {
+                'Accept': 'text/event-stream',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ transformationId: transformationId }),
+        });
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error('No reader available');
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const text = new TextDecoder().decode(value);
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+
+            for (const line of lines) {
+                if (line.startsWith('data: ')) {
+                    const eventData = line.slice(6);
+                    console.log('SSE Event:', eventData);
+
+                    if (eventData.includes('"status":"complete"')) {
+                        console.log('Generation complete');
+                        break;
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        console.error('SSE Error event:', error);
+    }
+}
