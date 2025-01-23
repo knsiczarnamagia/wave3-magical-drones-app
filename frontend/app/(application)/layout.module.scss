@@ -1,0 +1,39 @@
+@use '@/app/globals' as globals;
+
+@mixin global-padding {
+    padding-left: globals.$space-md;
+    padding-right: globals.$space-md;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+
+    @media (min-width: 768px) {
+        // display: grid;
+        // grid-template-columns: auto 1fr;
+        flex-direction: row;
+    }
+}
+
+.main {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.scrollableContent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    @include global-padding();
+
+    @media (min-width: 768px) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

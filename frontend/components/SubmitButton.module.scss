@@ -1,0 +1,45 @@
+@use '@/app/globals' as g;
+
+.button {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background-color: g.$color-primary;
+  color: white;
+  border: none;
+  border-radius: g.$radius-xl;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: g.$transition-md;
+
+  &:hover:not(:disabled) {
+    background-color: g.$color-hover;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &::after {
+    content: '';
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+} 

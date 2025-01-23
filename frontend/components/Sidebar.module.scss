@@ -1,0 +1,153 @@
+@use '@/app/globals' as globals;
+
+.sidebar {
+    position: fixed;
+    left: -150%;
+    top: calc(globals.$space-md / 2);
+    height: calc(100vh - globals.$space-md);
+    width: calc(100vw - globals.$space-md);
+    background-color: globals.$bg-color-secondary-1-light;
+    border-radius: globals.$radius-xl;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    transition: globals.$transition-lg;
+    z-index: 1000;
+
+    &.open {
+        left: calc(globals.$space-md / 2);
+    }
+
+    nav {
+        // margin: 1rem 0;
+
+        ul {
+            margin: 0;
+            padding: 0;
+
+            p {
+                transition: globals.$transition-lg;
+            }
+        }
+    }
+}
+
+.toggleButton {
+    position: fixed;
+    left: globals.$space-md;
+    bottom: globals.$space-md;
+    padding: globals.$space-sm;
+    background-color: globals.$bg-color-primary-light;
+    border: 1px solid #e2e8f0;
+    color: #4a5568;
+    border-radius: globals.$radius-md;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: globals.$transition-lg;
+
+    &:hover {
+        background-color: globals.$bg-color-secondary-2-light;
+    }
+}
+
+.titleContainer {
+    margin-left: globals.$space-md;
+    margin-top: globals.$space-lg;
+    margin-bottom: globals.$space-xl;
+    display: flex;
+    align-items: center;
+    gap: globals.$space-sm;
+    color: globals.$color-primary;
+
+    h1 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        white-space: nowrap;
+        transition: globals.$transition-lg;
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        position: relative;
+        left: calc(globals.$space-md / 2);
+
+        &.closed {
+            width: 64px;
+
+            .toggleButton {
+                left: 64px + globals.$space-md;
+            }
+
+            nav {
+                p {
+                    opacity: 0;
+                    display: none; // alternative to this?
+                }
+            }
+
+            .titleContainer {
+                h1 {
+                    opacity: 0;
+                    width: 0;
+                }
+            }
+        }
+
+        &.open {
+            width: 240px;
+
+            .toggleButton {
+                left: 240px + globals.$space-md;
+            }
+        }
+    }
+}
+
+// .logoutContainer {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     padding: 0.75rem 1rem;
+//     margin: 0 globals.$space-xs;
+//     cursor: pointer;
+//     border-radius: globals.$radius-xl;
+//     color: globals.$color-primary;
+//     transition: background-color 0.5s ease;
+
+.logoutButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: none;
+    background: none;
+    border-radius: globals.$radius-xl;
+    padding: 0 globals.$space-md;
+    margin: 0 globals.$space-sm;
+    width: calc(100% - globals.$space-md);
+    margin: auto;
+    color: globals.$color-primary;
+    font: inherit;
+    margin-left: globals.$space-xs;
+    transition: globals.$transition-lg;
+    min-height: 24px;
+
+    &:hover {
+        background-color: globals.$bg-color-secondary-2-light;
+    }
+
+    p {
+        padding-left: globals.$space-sm;
+    }
+}
+
+// }
+
+.closed .logoutButton {
+    p {
+        opacity: 0;
+        // visibility: hidden;
+        display: none;
+    }
+}
