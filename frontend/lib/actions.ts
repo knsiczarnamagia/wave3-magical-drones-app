@@ -43,6 +43,7 @@ export async function postLogin(prevState: PostLoginFormState, formData: FormDat
         const resBody: TokenResponse = await response.json();
         saveSession(resBody.token);
         console.debug('Login successful. Token saved: ' + resBody.token);
+        await new Promise(resolve => setTimeout(resolve, 200));
         redirect('/app');
         return { message: 'Login successful.', success: true };
     } else if (response.status === 401) {

@@ -1,7 +1,7 @@
 import { fontPrimary } from '@/lib/fonts';
 import Sidebar from '@/components/Sidebar';
 import styles from './layout.module.scss';
-import '@/app/globals.scss';
+import '@/app/globalstyles.scss';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     return (

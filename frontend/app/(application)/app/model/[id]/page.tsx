@@ -1,4 +1,3 @@
-import PageTitle from "@/components/PageTitle";
 import Transformation from "@/components/Transformation";
 import { getTransformation } from "@/lib/data";
 
@@ -13,7 +12,6 @@ export default async function TransformationPage({
 
     return (
         <>
-            {/* <PageTitle title={`${transformation.title}`} /> */}
             <Transformation transformation={transformation} />
         </>
     );

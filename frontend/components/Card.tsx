@@ -8,7 +8,7 @@ import { useState } from 'react';
 interface CardProps {
     imageUuid: string;
     title: string;
-    description: string;
+    description?: string;
 }
 
 export default function Card({ imageUuid, title, description }: CardProps) {
