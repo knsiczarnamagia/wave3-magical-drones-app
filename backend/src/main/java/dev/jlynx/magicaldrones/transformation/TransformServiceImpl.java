@@ -12,6 +12,7 @@ import dev.jlynx.magicaldrones.inference.ImageToImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +32,12 @@ public class TransformServiceImpl implements TransformService {
     private final ImageService imageService;
 
     @Autowired
-    public TransformServiceImpl(TransformationRepository transformationRepository,
-                                AccountRepository accountRepository,
-                                ImageToImageService model, ImageService imageService) {
+    public TransformServiceImpl(
+            TransformationRepository transformationRepository,
+            AccountRepository accountRepository,
+            @Qualifier("huggingFaceModel") ImageToImageService model,
+            ImageService imageService
+    ) {
         this.transformationRepository = transformationRepository;
         this.accountRepository = accountRepository;
         this.model = model;
