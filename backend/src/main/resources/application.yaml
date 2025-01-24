@@ -29,6 +29,11 @@ aws:
     bucket: ${MD_S3_BUCKET}
     bucket-test: ${MD_S3_BUCKET_TEST}
 
+hugging-face:
+  api:
+    token: ${MD_HUGGING_FACE}
+    base-url: https://api-inference.huggingface.co
+
 
 management:
   endpoints:
