@@ -20,7 +20,7 @@ export default function Transformation({ transformation }: TransformationProps) 
     const sourceImageSrc = `/api/imageProxy?uuid=${transformation.sourceImageUuid}`;
     const transformedImageSrc = `/api/imageProxy?uuid=${transformation.transformedImageUuid}`;
 
-    async function handleDownload(imageSrc: string, setDownloading: (state: boolean) => void) {
+    async function handleDownload(imageSrc: string, setDownloading: (state: boolean) => void, prefix: string) {
         try {
             setDownloading(true);
             const response = await fetch(imageSrc);
@@ -28,7 +28,7 @@ export default function Transformation({ transformation }: TransformationProps) 
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `generated-${transformation.transformedImageUuid}.jpg`;
+            link.download = `${prefix}-${transformation.transformedImageUuid}.jpg`;
             document.body.appendChild(link);
             link.click();
             link.remove();
@@ -74,7 +74,7 @@ export default function Transformation({ transformation }: TransformationProps) 
                     </div>
                     <button
                         className={styles.button}
-                        onClick={() => handleDownload(sourceImageSrc, setIsSourceDownloading)}
+                        onClick={() => handleDownload(sourceImageSrc, setIsSourceDownloading, 'original')}
                         disabled={isSourceDownloading}
                     >
                         {isSourceDownloading ? 'Downloading...' : 'Download original'}
@@ -102,7 +102,7 @@ export default function Transformation({ transformation }: TransformationProps) 
                     {transformation.transformedImageUuid && (
                         <button
                             className={styles.button}
-                            onClick={() => handleDownload(transformedImageSrc, setIsTransformedDownloading)}
+                            onClick={() => handleDownload(transformedImageSrc, setIsTransformedDownloading, 'generated')}
                             disabled={isTransformedDownloading}
                         >
                             {isTransformedDownloading ? 'Downloading...' : 'Download generated'}
