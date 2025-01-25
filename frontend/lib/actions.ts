@@ -114,10 +114,10 @@ export async function createTransformation(
     const file = formData.get('sourceImage');
     if (file instanceof File) {
         console.log("FILE EXTENSION: ", getFileExtension(file));
-        if (!['jpg'].includes(getFileExtension(file))) {
+        if (!['jpg', 'jpeg', 'png', 'tiff', 'avif', 'webp', 'bmp'].includes(getFileExtension(file))) {
             return {
                 errors: {
-                    sourceImage: ['Invalid file extension! Only .jpg images are supported.']
+                    sourceImage: ['Invalid file extension! Supported formats: jpg, jpeg, png, tiff, avif, webp, bmp.']
                 },
                 success: false
             }
