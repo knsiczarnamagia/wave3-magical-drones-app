@@ -27,7 +27,7 @@ public class ImageController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UuidResponse> uploadSourceImage(
-            @HasExtension({"jpg"})
+            @HasExtension({"jpg", "png", "jpeg", "tiff", "avif", "webp", "bmp"})
             @RequestParam("sourceImg")
             MultipartFile sourceFile
     ) {
