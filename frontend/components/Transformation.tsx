@@ -7,6 +7,7 @@ import Image from 'next/image';
 import LoadingBox from './LoadingBox';
 import { TransformationData } from '@/lib/types';
 import { makeInference } from '@/lib/actions';
+import Spinner from './Spinner';
 
 interface TransformationProps {
     transformation: TransformationData;
@@ -55,8 +56,16 @@ export default function Transformation({ transformation }: TransformationProps) 
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>{transformation.title}</h2>
+            {/* todo: create a SpinnerButton component */}
             <button className={styles.button} onClick={sendInferenceRequest} disabled={isGenerating}>
-                {isGenerating ? 'Generating...' : 'Generate'}
+                {isGenerating ? (
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <Spinner size="small" />
+                        <span style={{ marginLeft: '0.5rem' }}>Generating...</span>
+                    </div>
+                ) : (
+                    'Generate'
+                )}
             </button>
             <div className={styles.imagesContainer}>
                 <div className={styles.imageWrapper}>
