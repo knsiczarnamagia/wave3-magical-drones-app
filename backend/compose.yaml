@@ -16,7 +16,7 @@ services:
       - db-data:/var/lib/postgresql/data
 
   app:
-    image: public.ecr.aws/a5c3k5z0/magical-drones-app:0.0.1
+    image: public.ecr.aws/a5c3k5z0/magical-drones-app:0.0.1 # Replace this with the newest image tag
     ports:
       - "8080:8080"
     container_name: md-backend-app
