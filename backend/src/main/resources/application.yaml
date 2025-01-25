@@ -48,6 +48,6 @@ management:
 
 info:
   app:
-    name: Magical Drones backend service
-    description: A backend web service for the Magical Drones project
+    name: @project.name@
+    description: @project.description@
     version: @project.version@
