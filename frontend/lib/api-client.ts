@@ -35,7 +35,7 @@ export async function callWithErrors(path: string, options: RequestInit): Promis
 
     const apiUrl = await getApiUrl();
     const url = path.startsWith('http') ? path : apiUrl + path;
-    console.debug(`Calling ${url} with options: ${JSON.stringify(options)}`);
+    // console.debug(`Calling ${url} with options: ${JSON.stringify(options)}`);
     const response = await fetch(url, options);
     return response;
 }
