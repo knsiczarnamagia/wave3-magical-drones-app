@@ -33,7 +33,6 @@
     @include global-padding();
 
     @media (min-width: 768px) {
-        padding-left: 0;
-        padding-right: 0;
+        padding-inline: globals.$space-md;
     }
 }

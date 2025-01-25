@@ -1,5 +1,5 @@
-import { call, callWithErrors } from "./api-client";
-import { TransformationData } from "./types";
+import { call, callWithErrors, getApiUrl } from "./api-client";
+import { BackendAppMetadata, TransformationData } from "./types";
 
 
 export async function getTransformations(): Promise<TransformationData[]> {
@@ -27,4 +27,12 @@ export async function getTransformationImage(uuid: string): Promise<string> {
         src = URL.createObjectURL(image);
     }
     return src;
+}
+
+export async function getBackendAppMetadata(): Promise<BackendAppMetadata> {
+    const baseUrl = await getApiUrl();
+    const response = await fetch(baseUrl + '/actuator/info', {
+        method: 'GET',
+    });
+    return response.json();
 }

@@ -69,3 +69,13 @@ export interface TransformationData {
     startedAt?: string;
     completedAt?: string;
 }
+
+export interface BackendAppMetadata {
+    app: AppInfo;
+}
+
+interface AppInfo {
+    name: string;
+    description: string;
+    version: string;
+}
