@@ -13,9 +13,8 @@
 	<artifactId>magicaldrones</artifactId>
 	<version>0.2.1</version>
 
-	<name>magical-drones-webapp</name>
-<!--	todo: change description -->
-	<description>A web application for the Magical Drones project</description>
+	<name>Magical Drones backend service</name>
+	<description>A backend web service for the Magical Drones project.</description>
 	<url/>
 	<licenses>
 		<license/>
