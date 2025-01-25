@@ -18,9 +18,9 @@ import java.time.LocalDateTime;
  */
 public record TransformationView(
         long id,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "ddMMyyyy_hhmmss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "ddMMyyyy_HHmmss")
         LocalDateTime startedAt,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "ddMMyyyy_hhmmss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "ddMMyyyy_HHmmss")
         LocalDateTime completedAt,
         @JsonProperty("sourceImageUuid")
         String sourceImageUuid,
