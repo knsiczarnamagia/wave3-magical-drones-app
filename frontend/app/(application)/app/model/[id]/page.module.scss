@@ -1,0 +1,23 @@
+@use '@/app/globals' as g;
+
+.link {
+    color: g.$color-primary;
+    text-decoration: none;
+    text-align: center;
+    font-size: g.$font-size-lg;
+    display: block;
+    margin-top: g.$space-xl;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.homeTitle {
+    font-size: 2.25rem;
+
+    @media (min-width: 768px) {
+        font-size: 2.75rem;
+        
+    }
+}
