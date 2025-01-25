@@ -92,7 +92,7 @@ export default function Transformation({ transformation }: TransformationProps) 
                                     alt="Transformed image"
                                     fill
                                     style={{ objectFit: 'contain' }}
-                                    sizes='(max-width: 768px) 100vw, 50vw'
+                                    sizes='(max-width: 768px) 100vh, 50vw'
                                     onLoad={() => setIsLoading(false)}
                                     unoptimized
                                 />

@@ -11,7 +11,9 @@ export function parseDateTime(datetime: string): Date {
     const minutes = parseInt(timePart.substring(2, 4), 10);
     const seconds = parseInt(timePart.substring(4, 6), 10);
 
-    return new Date(year, month, day, hours, minutes, seconds);
+    // Create date in UTC
+    const utcDate = new Date(Date.UTC(year, month, day, hours, minutes, seconds));
+    return utcDate;
 }
 
 export function getFileExtension(file: File): string {

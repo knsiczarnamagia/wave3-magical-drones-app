@@ -14,9 +14,7 @@ interface NavLinkProps {
 
 export default function NavLink({ icon: Icon, label, url, iconProps }: NavLinkProps) {
     const pathname = usePathname();
-    console.log('Pathname - url:', pathname, url);
     const isActive = pathname === url;
-    console.log('isActive:', isActive);
 
     return (
         <li className={`${styles.navLink} ${isActive ? styles.focused : ''}`}>
