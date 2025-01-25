@@ -70,6 +70,7 @@ export default function Transformation({ transformation }: TransformationProps) 
                             style={{ objectFit: 'contain' }}
                             sizes='(max-width: 768px) 100vh, 50vw'
                             onLoad={() => setIsLoading(false)}
+                            unoptimized
                         />
                     </div>
                     <button
@@ -93,6 +94,7 @@ export default function Transformation({ transformation }: TransformationProps) 
                                     style={{ objectFit: 'contain' }}
                                     sizes='(max-width: 768px) 100vw, 50vw'
                                     onLoad={() => setIsLoading(false)}
+                                    unoptimized
                                 />
                             </>
                         ) : (
