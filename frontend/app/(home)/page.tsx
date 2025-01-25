@@ -11,7 +11,6 @@ export default function Home() {
                     startColor="magenta"
                     endColor="orange"
                     direction="to bottom right"
-                    rotate
                 >
                     Magical Drones
                 </GradientText>
