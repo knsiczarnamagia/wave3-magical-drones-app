@@ -8,7 +8,6 @@ import {
     LuSettings,
     LuPanelLeftClose,
     LuPanelLeftOpen,
-    LuCroissant,
     LuLogOut
 } from 'react-icons/lu';
 import NavLink from './NavLink';
@@ -16,6 +15,7 @@ import styles from './Sidebar.module.scss';
 import { logout } from '@/lib/actions';
 import NavButton from './NavButton';
 import GradientText from './GradientText';
+import Image from 'next/image';
 
 const navigationItems = [
     { icon: LuLayoutDashboard, label: 'Dashboard', url: '/app/dashboard' },
@@ -34,7 +34,13 @@ export default function Sidebar() {
     return (
         <header className={`${styles.sidebar} ${isOpen ? styles.open : styles.closed}`}>
             <div className={styles.titleContainer}>
-                <LuCroissant size={24} />
+                <Image
+                    src="/app-logo.png"
+                    alt="Magical Drones Logo"
+                    width={40}
+                    height={40}
+                    priority
+                />
                 <h1><GradientText startColor="magenta" endColor="orange" direction="to bottom right">Magical Drones</GradientText></h1>
             </div>
             <button

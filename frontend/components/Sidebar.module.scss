@@ -51,7 +51,7 @@
 }
 
 .titleContainer {
-    margin-left: globals.$space-md;
+    margin-left: globals.$space-md - 5px; // fixes main logo misalignment for now
     margin-top: globals.$space-lg;
     margin-bottom: globals.$space-xl;
     display: flex;
@@ -61,7 +61,8 @@
 
     h1 {
         margin: 0;
-        font-size: 1.25rem;
+        // margin-left: -8px; // makes app title positioning better when font size is $font-size-lg
+        font-size: globals.$font-size-md;
         font-weight: 700;
         white-space: nowrap;
         transition: globals.$transition-lg;
