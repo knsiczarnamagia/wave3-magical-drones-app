@@ -19,7 +19,7 @@ import Image from 'next/image';
 
 const navigationItems = [
     { icon: LuLayoutDashboard, label: 'Dashboard', url: '/app/dashboard' },
-    { icon: LuBoxes, label: 'Model', url: '/app/model/' },
+    { icon: LuBoxes, label: 'Model', url: '/app/model' },
     { icon: LuChartBar, label: 'Statistics', url: '/app/stats' },
     { icon: LuSettings, label: 'Settings', url: '/app/settings' },
 ];
