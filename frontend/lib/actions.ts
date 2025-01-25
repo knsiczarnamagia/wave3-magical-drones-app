@@ -114,7 +114,7 @@ export async function createTransformation(
     const file = formData.get('sourceImage');
     if (file instanceof File) {
         console.log("FILE EXTENSION: ", getFileExtension(file));
-        if (!['jpg', 'jpeg', 'png', 'tiff', 'avif', 'webp', 'bmp'].includes(getFileExtension(file))) {
+        if (!['jpg', 'jpeg', 'png', 'tiff', 'avif', 'webp', 'bmp'].includes(getFileExtension(file).toLowerCase())) {
             return {
                 errors: {
                     sourceImage: ['Invalid file extension! Supported formats: jpg, jpeg, png, tiff, avif, webp, bmp.']
@@ -170,9 +170,15 @@ export async function createTransformation(
  */
 async function fileUpload(file: File): Promise<string | undefined> {
     console.log(file);
-
+    
+    const fileLowerCase = new File([file], file.name.toLowerCase(), {
+        type: file.type,
+        lastModified: file.lastModified,
+    });
+    
     const formData = new FormData();
-    formData.append('sourceImg', file);
+    formData.append('sourceImg', fileLowerCase);
+    
     try {
         const response = await callWithErrors('/image', {
             method: 'POST',
