@@ -6,7 +6,7 @@ export default async function DashboardPage() {
     return (
         <>
             <PageTitle>Dashboard</PageTitle>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div style={{textAlign: 'center'}}>Loading...</div>}>
                 <CardGrid />
             </Suspense>
         </>

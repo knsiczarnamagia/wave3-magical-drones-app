@@ -19,7 +19,7 @@ export default function SettingsPage() {
     return (
         <>
             <PageTitle>Settings</PageTitle>
-            <h2>Backend service</h2>
+            <h2>Backend service info:</h2>
             <ul>
                 <li>Name: {metadata?.app.name || 'Loading...'}</li>
                 <li>Description: {metadata?.app.description || 'Loading...'}</li>
