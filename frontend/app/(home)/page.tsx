@@ -6,7 +6,7 @@ import GradientText from "@/components/GradientText";
 export default function Home() {
     return (
         <>
-            <PageTitle fontSize="2.75rem">
+            <PageTitle className={styles.homeTitle}>
                 <GradientText
                     startColor="magenta"
                     endColor="orange"
