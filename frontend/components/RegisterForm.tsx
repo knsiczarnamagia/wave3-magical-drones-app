@@ -39,7 +39,7 @@ export default function RegisterForm() {
                 required
             />
             <SubmitButton isLoading={isPending}>
-                Log In
+                Register
             </SubmitButton>
             <p className={styles.loginInfo}>
                 Already have an account?
