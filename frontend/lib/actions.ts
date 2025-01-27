@@ -11,7 +11,7 @@ import {
 } from './types';
 import { deleteSession, saveSession } from './session';
 import { redirect } from 'next/navigation';
-import { callNoBody, callWithErrors } from './api-client';
+import { callWithErrors } from './api-client';
 import { getFileExtension } from './utils';
 
 interface TokenResponse {
