@@ -11,7 +11,7 @@ import {
 } from './types';
 import { deleteSession, saveSession } from './session';
 import { redirect } from 'next/navigation';
-import { callWithErrors } from './api-client';
+import { callNoBody, callWithErrors } from './api-client';
 import { getFileExtension } from './utils';
 
 interface TokenResponse {
@@ -160,6 +160,13 @@ export async function createTransformation(
         console.debug('Transformation creation failed');
         return { message: 'Transformation creation failed.', success: false };
     }
+}
+
+export async function deleteTransformation(id: number) {
+    const response = await callWithErrors(`/transform/${id}`, {
+        method: 'DELETE'
+    });
+    return response.status;
 }
 
 /**

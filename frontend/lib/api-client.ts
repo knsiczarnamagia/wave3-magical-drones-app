@@ -9,7 +9,7 @@ export async function getApiUrl(): Promise<string> {
     return process.env.API_URL || URL;
 }
 
-export async function call(path: string, options: RequestInit) {
+export async function call(path: string, options: RequestInit): Promise<any> {
     const response = await callWithErrors(path, options);
     if (response.ok) {
         return await response.json();

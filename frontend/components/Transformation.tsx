@@ -8,6 +8,9 @@ import LoadingBox from './LoadingBox';
 import { TransformationData } from '@/lib/types';
 import { makeInference } from '@/lib/actions';
 import Spinner from './Spinner';
+import { deleteTransformation } from '@/lib/actions';
+import { redirect } from 'next/navigation';
+import SpinnerButton from './SpinnerButton';
 
 interface TransformationProps {
     transformation: TransformationData;
@@ -16,8 +19,10 @@ interface TransformationProps {
 export default function Transformation({ transformation }: TransformationProps) {
     const [isLoading, setIsLoading] = useState(true);
     const [isGenerating, setIsGenerating] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
     const [isSourceDownloading, setIsSourceDownloading] = useState(false);
     const [isTransformedDownloading, setIsTransformedDownloading] = useState(false);
+    const [deleteError, setDeleteError] = useState<string | null>(null);
     const sourceImageSrc = `/api/imageProxy?uuid=${transformation.sourceImageUuid}`;
     const transformedImageSrc = `/api/imageProxy?uuid=${transformation.transformedImageUuid}`;
 
@@ -51,6 +56,18 @@ export default function Transformation({ transformation }: TransformationProps) 
         setIsGenerating(false);
         // todo: the page should not reload; add transformation object to state and useEffect to fetch it
         window.location.reload();
+    }
+
+    async function deleteTransformationRequest() {
+        setIsDeleting(true);
+        const status = await deleteTransformation(Number(transformation.id));
+        if (status === 204) {
+            setIsDeleting(false);
+            redirect('/app/dashboard');
+        } else {
+            setIsDeleting(false);
+            setDeleteError('Failed to delete transformation.');
+        }
     }
 
     return (
@@ -129,6 +146,16 @@ export default function Transformation({ transformation }: TransformationProps) 
                 <p>Generation started: {transformation.startedAt ? parseDateTime(transformation.startedAt).toLocaleString() : '---'}</p>
                 <p>Generation completed: {transformation.completedAt ? parseDateTime(transformation.completedAt).toLocaleString() : '---'}</p>
             </div>
+            {/* <button className={styles.button} onClick={deleteTransformationRequest}>Delete</button> */}
+            <SpinnerButton
+                text='Delete'
+                loadingText='Deleting...'
+                onClickHandler={deleteTransformationRequest}
+                isLoading={isDeleting}
+                bgColor='red'
+                className={styles.button}
+            />
+            {deleteError && <p className={styles.errorMsg}>{deleteError}</p>}
         </div>
     );
 }
