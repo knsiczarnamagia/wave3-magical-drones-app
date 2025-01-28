@@ -6,14 +6,14 @@ interface SpinnerButtonProps {
     text: string;
     loadingText: string;
     className?: string;
-    bgColor: string;
+    // bgColor: string;
 }
 
 export default function SpinnerButton(props: SpinnerButtonProps) {
     return (
         <button 
             className={props.className || ''}
-            style={{ backgroundColor: props.bgColor}}
+            // style={{ backgroundColor: props.bgColor}}
             onClick={props.onClickHandler} 
             disabled={props.isLoading}
         >

@@ -152,8 +152,8 @@ export default function Transformation({ transformation }: TransformationProps) 
                 loadingText='Deleting...'
                 onClickHandler={deleteTransformationRequest}
                 isLoading={isDeleting}
-                bgColor='red'
-                className={styles.button}
+                // bgColor='red'
+                className={`${styles.button} ${styles.deleteButton}`}
             />
             {deleteError && <p className={styles.errorMsg}>{deleteError}</p>}
         </div>
