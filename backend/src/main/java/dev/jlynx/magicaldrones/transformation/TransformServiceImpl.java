@@ -35,7 +35,7 @@ public class TransformServiceImpl implements TransformService {
     public TransformServiceImpl(
             TransformationRepository transformationRepository,
             AccountRepository accountRepository,
-            @Qualifier("huggingFaceModel") ImageToImageService model,
+            @Qualifier("inferenceEndpointsHuggingFaceModel") ImageToImageService model,
             ImageService imageService
     ) {
         this.transformationRepository = transformationRepository;
