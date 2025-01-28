@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 import java.util.Base64;
 
 @Service
-public class HuggingFaceModel implements ImageToImageService {
+public class ServerlessHuggingFaceModel implements ImageToImageService {
 
-    private static final Logger log = LoggerFactory.getLogger(HuggingFaceModel.class);
+    private static final Logger log = LoggerFactory.getLogger(ServerlessHuggingFaceModel.class);
     private static final String MODEL_ID = "stabilityai/stable-diffusion-xl-refiner-1.0";
 
-    private final HuggingFaceClient client;
+    private final ServerlessHuggingFaceClient client;
 
     @Autowired
-    public HuggingFaceModel(HuggingFaceClient client) {
+    public ServerlessHuggingFaceModel(ServerlessHuggingFaceClient client) {
         this.client = client;
     }
 
@@ -28,11 +28,11 @@ public class HuggingFaceModel implements ImageToImageService {
         String encodedImage = Base64.getEncoder().encodeToString(image);
         ResponseEntity<byte[]> response = client.sendImage(MODEL_ID, new HuggingFaceRequest(encodedImage));
         if (response.getStatusCode().is4xxClientError() || response.getStatusCode().is5xxServerError()) {
-            log.debug("Hugging Face client returned error status: {}.", response.getStatusCode().value());
-            throw new InternalServerException("Hugging Face client failed to process image (status: %d)."
+            log.debug("Hugging Face Serverless Endpoints client returned error status: {}.", response.getStatusCode().value());
+            throw new InternalServerException("Hugging Face Serverless Endpoints client failed to process image (status: %d)."
                     .formatted(response.getStatusCode().value()));
         }
-        log.trace("Hugging Face client successfully returned generated image (status: {}).", response.getStatusCode().value());
+        log.trace("Hugging Face Serverless Endpoints client successfully returned generated image (status: {}).", response.getStatusCode().value());
         return response.getBody();
     }
 }

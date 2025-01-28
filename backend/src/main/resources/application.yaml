@@ -32,7 +32,8 @@ aws:
 hugging-face:
   api:
     token: ${MD_HUGGING_FACE}
-    base-url: https://api-inference.huggingface.co
+    inference-endpoints-url: ${MD_HUGGING_FACE_URL}
+    serverless-url: https://api-inference.huggingface.co
 
 
 management:

@@ -11,7 +11,7 @@
 
 	<groupId>dev.jlynx</groupId>
 	<artifactId>magicaldrones</artifactId>
-	<version>0.2.1</version>
+	<version>0.3.0</version>
 
 	<name>Magical Drones backend service</name>
 	<description>A backend web service for the Magical Drones project.</description>

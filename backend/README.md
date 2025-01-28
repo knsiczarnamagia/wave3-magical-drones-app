@@ -18,6 +18,7 @@ MD_DB_URL=jdbc:postgresql://db:5432/magical-drones-db
 MD_DB_USERNAME=magicaldrones
 MD_DB_PWD=password
 MD_HUGGING_FACE=<your-hugging-face-api-key>
+MD_HUGGING_FACE_URL=<url-of-your-inference-endpoints>
 
 # AWS configuration
 AWS_ACCESS_KEY_ID=<your-aws-access-key-id>
